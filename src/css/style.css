@@ -3,11 +3,23 @@
     margin: 0;
     border: 0;
 }
-#catImage {
+h1 {
+	font: 4em sans-serif;
+
+
+}
+#catImage1, #catImage2 {
 	font: 12em sans-serif;
 	color: #FFF;
-	background-image: url('https://placekitten.com/800/300');
-	width: 800px;
+	width: 400px;
 	height:300px;
 	padding: 30px 0 0 30px;
+	margin: 10px 20px 0 10px;
+}
+#cat1, #cat2 {
+	float: left;
+}
+#catCaption1, #catCaption2 {
+	font: 2em sans-serif;
+	text-align: center;
 }
