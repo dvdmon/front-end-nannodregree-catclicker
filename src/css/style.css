@@ -8,18 +8,20 @@ h1 {
 
 
 }
-#catImage {
+div[id^="innerCatFrame-"] {
 	font: 12em sans-serif;
 	color: #FFF;
 	width: 600px;
 	height: 400px;
 	padding: 30px 0 0 30px;
 	margin: 10px 20px 0 10px;
+	display: none;
 }
 #catImageFrame {
 	float: left;
 }
-#catCaption {
+div[id^="catCaption-"] {
 	font: 2em sans-serif;
 	text-align: center;
+	display: none;
 }
