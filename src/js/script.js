@@ -1,21 +1,25 @@
 $(function() {
 
 	//set up array variable to hold cat elements
-	var cats = document.getElementById("catList").getElementsByTagName("li");
-	var catCount = 0;
+	var $cats = $("#catList").children("li");
+	var catCounts = [0,0,0,0,0,0,0]
 	var $catImage = $('#catImage');
-	for (var i = 0; i < cats.length; i++) {
-		var cat = cats[i];
+	for (var i = 0; i < $cats.length; i++) {
+		var cat = $cats[i];
 
-		cat.addEventListener('click', (function(cat) {
+		cat.addEventListener('click', (function(currentCat) {
         	return function() {
         		//alert(cat.innerText)
-        		$catImage.css("background-image","url('../src/images/" + cat.innerText + ".jpg')");
-				$('#catCaption').text(cat.innerText);
-
+        		$catImage.css("background-image","url('../src/images/" + currentCat.innerText + ".jpg')");
+				$('#catCaption').text(currentCat.innerText);
+				$catImage.text("0");
+				//catCounts[$("#catList").find(currentCat).index()] = 0;
 				$catImage.click(function(){
-	  				catCount++;
-	  				$catImage.text(catCount);
+	  				catCounts[$("#catList").find(currentCat).index()] +=1;
+	  				console.log(catCounts);
+
+	  				//console.log($("#catList").find(currentCat).index());
+	  				$catImage.text(catCounts[$("#catList").find(currentCat).index()]);
 				});
 	   		 };
 		})(cat));
