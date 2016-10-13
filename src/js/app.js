@@ -65,6 +65,7 @@
 
         setCatforImageDisplay: function(cat) {
             model.currenCat = cat;
+            model.adminVisible = false;
         },
 
         incrementCatCount: function() {
@@ -72,19 +73,19 @@
             viewMain.render();
         },
 
-        makeAdminVisible: function() {
-            model.adminVisible =  true;
+        toggleAdmin: function() {
+            model.adminVisible =  !(model.adminVisible);
+            viewMain.render();
         },
 
-
-        hideAdmin: function() {
-            model.adminVisible =  false;
+        getAdminVisibility: function() {
+            return model.adminVisible;
         },
 
         submitForm: function(cname, cimage, ccount) {
             model.currenCat.catName = cname;
             model.currenCat.catImage = cimage;
-            model.currenCat.clickCount = ccount;
+            model.currenCat.clickCount = parseInt(ccount);
             viewMain.render();
         }
 
@@ -114,6 +115,8 @@
             this.$catImage.css('background-image', 'url("../src/images/' + currenCat.catImage + '")');
             this.$catCaption.html(currenCat.catName);
             this.$catImage.html(currenCat.clickCount);
+            viewAdmin.render();
+
         }
     };
 
@@ -148,7 +151,6 @@
                     return function() {
                         octopus.setCatforImageDisplay(catCopy);
                         viewMain.render();
-                        viewAdmin.render();
                     }
                 })(cat));
 
@@ -163,12 +165,20 @@
   var viewAdmin = {
         init: function() {
             //hide the admin form initially
-            //this.adminForm = document.getElementById("rightForm");
+            //$("#rightForm").hide();
             //adminForm.setAttribute("display","none");
             this.txtCatName = $("#txtCatName");
             this.txtCatImage = $("#txtCatImage");
             this.txtClickCount = $("#txtClickCount");
-            this.render();
+
+
+            // admin button
+            document.getElementById("btnAdmin").addEventListener('click', function (event) {
+                event.preventDefault();
+                octopus.toggleAdmin();
+                });
+
+            viewAdmin.render();
         },
 
         render: function() {
@@ -177,17 +187,29 @@
             txtCatImage.value = currentCat.catImage;
             txtClickCount.value = currentCat.clickCount;
 
-            //make the cancel button just reset the form elements to what they were.
-            document.getElementById("btnCancel").addEventListener('click', function () {
-                this.render();
-            });
 
-            document.getElementById("btnSave").addEventListener('click', function () {
+
+            //submit button
+            document.getElementById("btnSave").addEventListener('click', function (event) {
+                event.preventDefault();
                 octopus.submitForm(txtCatName.value, txtCatImage.value, txtClickCount.value);
             });
 
+            //make the cancel button just reset the form elements to what they were.
+            document.getElementById("btnCancel").addEventListener('click', function (event) {
+                event.preventDefault();
+                viewMain.render();
+            });
 
 
+            if (octopus.getAdminVisibility())
+            {
+                $("#rightForm").show();
+            }
+            else
+            {
+                $("#rightForm").hide();
+            }
         }
     };
 
